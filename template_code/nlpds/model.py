@@ -4,7 +4,7 @@ import numpy as np
 
 
 class BagOfWordsClassifier(nn.Module):
-    def __init__(self, vocab_size, num_labels, hidden1, hidden2, hidden3, batchsize, embedding_dim,):  # TODO: Implement
+    def __init__(self, vocab_size, num_labels, hidden1, hidden2, batchsize, embedding_dim,):  # TODO: Implement
         """
         TODO: Write a description for this class.
         HINT: This should give you good idea on how to build your model,
@@ -23,8 +23,7 @@ class BagOfWordsClassifier(nn.Module):
         self.embedding = nn.Embedding(vocab_size, embedding_dim)
         self.fc1 = nn.Linear(embedding_dim, hidden1)
         self.fc2 = nn.Linear(hidden1, hidden2)
-        self.fc3 = nn.Linear(hidden2, hidden3)
-        self.fc4 = nn.Linear(hidden3, num_labels)
+        self.fc3 = nn.Linear(hidden2, num_labels)
 
     def forward(self, input: torch.LongTensor) -> torch.FloatTensor:
         """
@@ -48,9 +47,6 @@ class BagOfWordsClassifier(nn.Module):
         x = nn.functional.relu(x)
         
         x = self.fc3(x)
-        x = nn.functional.relu(x)
-        
-        x = self.fc4(x)
         x = torch.sigmoid(x)
         
         return x
@@ -75,9 +71,6 @@ class BagOfWordsClassifier(nn.Module):
         x = nn.functional.relu(x)
         
         x = self.fc3(x)
-        x = nn.functional.relu(x)
-        
-        x = self.fc4(x)
         x = torch.sigmoid(x)
         
         final_prediction = np.argmax(x, axis=1)
