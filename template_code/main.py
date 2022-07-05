@@ -37,10 +37,10 @@ if __name__ == '__main__':
     """Training settings"""
     num_epochs = 10  # TODO
     batch_size = 8  # TODO
-    learning_rate = 5e-4
+    learning_rate = 0.0005
 
     model = BagOfWordsClassifier(vocab_size=len(dict_token_idx), num_labels=5,
-                                 hidden1=100, hidden2=50, batchsize=batch_size, embedding_dim=300)  # TODO
+                                 hidden1=128, hidden2=64, batchsize=batch_size, embedding_dim=500)  # TODO
     optimizer = torch.optim.Adam(
         filter(lambda p: p.requires_grad, model.parameters()), lr=learning_rate)  # From Google, SGD performed badly
     criterion = nn.CrossEntropyLoss()
@@ -98,9 +98,6 @@ if __name__ == '__main__':
         train_losses.append(total_loss / total)
         valid_losses.append(val_loss / val_total)
 
-        if len(valid_losses) > 2 and all((val_loss / val_total) >= loss for loss in valid_losses[-3:]):
-            print('Stopping early')
-            break
 
     """Initiate Testing"""
     print("Start testing")
